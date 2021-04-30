@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CrossPoints": {
+      "commandName": "Project",
+      "sqlDebugging": true
+    }
+  }
+}
