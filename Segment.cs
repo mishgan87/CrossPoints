@@ -10,13 +10,24 @@ namespace CrossPoints
     /// </summary>
     class Segment
     {
-        // координаты вершин отрезка
-        public int x1, x2, y1, y2;
+        // Вершины отрезка
+        public Point p1, p2;
         // конструктор класса
         public Segment()
         {
-            x1 = x2 = y1 = y2 = -1;
+            p1 = new Point(-1, -1);
+            p2 = new Point(-1, -1);
         }
+        /// <summary>
+        /// конструктор класса
+        /// </summary>
+        /// <param name="firstPoint">Первая точка</param>
+        /// <param name="secondPoint">Вторая точка</param>
+        public Segment(Point firstPoint, Point secondPoint)
+		{
+            p1 = firstPoint;
+            p2 = secondPoint;
+		}
         /// <summary>
         /// конструктор класса
         /// </summary>
@@ -26,10 +37,8 @@ namespace CrossPoints
         /// <param name="ys">Координата по оси OY второй точки</param>
         public Segment(int xf, int yf, int xs, int ys)
         {
-            x1 = xf;
-            x2 = xs;
-            y1 = yf;
-            y2 = ys;
+            p1 = new Point(xf, yf);
+            p2 = new Point(xs, ys);
         }
         /// <summary>
         /// Перегрузка оператора ==
@@ -39,7 +48,7 @@ namespace CrossPoints
         /// <returns></returns>
         public static bool operator ==(Segment s1, Segment s2)
         {
-            if  ( (s1.x1 == s2.x1) && (s1.x2 == s2.x2) && (s1.y1 == s2.y1) && (s1.y2 == s2.y2) )
+            if  ( (s1.p1 == s2.p1) && (s1.p2 == s2.p2) )
 			{
                 return true;
 			}
@@ -53,7 +62,7 @@ namespace CrossPoints
         /// <returns></returns>
         public static bool operator !=(Segment s1, Segment s2)
         {
-            if ((s1.x1 != s2.x1) || (s1.x2 != s2.x2) || (s1.y1 != s2.y1) || (s1.y2 != s2.y2))
+            if ( (s1.p1 != s2.p1) || (s1.p2 != s2.p2) )
             {
                 return true;
             }
@@ -61,10 +70,10 @@ namespace CrossPoints
         }
         public void SetPoint(int xf, int yf, int xs, int ys)
 		{
-            x1 = xf;
-            x2 = xs;
-            y1 = yf;
-            y2 = ys;
+            p1.X = xf;
+            p1.Y = yf;
+            p2.X = xs;
+            p2.Y = ys;
         }
         /// <summary>
         /// векторное произведение
@@ -80,10 +89,10 @@ namespace CrossPoints
         }
         public static bool SegmentsAreCrossing(ref Segment seg1, ref Segment seg2)
         {
-            int v1 = VectorMult(seg2.x2 - seg2.x1, seg2.y2 - seg2.y1, seg1.x1 - seg2.x1, seg1.y1 - seg2.y1);
-            int v2 = VectorMult(seg2.x2 - seg2.x1, seg2.y2 - seg2.y1, seg1.x2 - seg2.x1, seg1.y2 - seg2.y1);
-            int v3 = VectorMult(seg1.x2 - seg1.x1, seg1.y2 - seg1.y1, seg2.x1 - seg1.x1, seg2.y1 - seg1.y1);
-            int v4 = VectorMult(seg1.x2 - seg1.x1, seg1.y2 - seg1.y1, seg2.x2 - seg1.x1, seg2.y2 - seg1.y1);
+            int v1 = VectorMult(seg2.p2.X - seg2.p1.X, seg2.p2.Y - seg2.p1.Y, seg1.p1.X - seg2.p1.X, seg1.p1.Y - seg2.p1.Y);
+            int v2 = VectorMult(seg2.p2.X - seg2.p1.X, seg2.p2.Y - seg2.p1.Y, seg1.p2.X - seg2.p1.X, seg1.p2.Y - seg2.p1.Y);
+            int v3 = VectorMult(seg1.p2.X - seg1.p1.X, seg1.p2.Y - seg1.p1.Y, seg2.p1.X - seg1.p1.X, seg2.p1.Y - seg1.p1.Y);
+            int v4 = VectorMult(seg1.p2.X - seg1.p1.X, seg1.p2.Y - seg1.p1.Y, seg2.p2.X - seg1.p1.X, seg2.p2.Y - seg1.p1.Y);
             if ((v1 * v2) < 0 && (v3 * v4) < 0)
             {
                 return true;
@@ -98,12 +107,12 @@ namespace CrossPoints
         /// <returns></returns>
         public static Point CrossingPoint(ref Segment seg1, ref Segment seg2)
         {
-            int a1 = seg1.y2 - seg1.y1;
-            int b1 = seg1.x1 - seg1.x2;
-            int c1 = -seg1.x1 * (seg1.y2 - seg1.y1) + seg1.y1 * (seg1.x2 - seg1.x1);
-            int a2 = seg2.y2 - seg2.y1;
-            int b2 = seg2.x1 - seg2.x2;
-            int c2 = -seg2.x1 * (seg2.y2 - seg2.y1) + seg2.y1 * (seg2.x2 - seg2.x1);
+            int a1 = seg1.p2.Y - seg1.p1.Y;
+            int b1 = seg1.p1.X - seg1.p2.X;
+            int c1 = -seg1.p1.X * (seg1.p2.Y - seg1.p1.Y) + seg1.p1.Y * (seg1.p2.X - seg1.p1.X);
+            int a2 = seg2.p2.Y - seg2.p1.Y;
+            int b2 = seg2.p1.X - seg2.p2.X;
+            int c2 = -seg2.p1.X * (seg2.p2.Y - seg2.p1.Y) + seg2.p1.Y * (seg2.p2.X - seg2.p1.X);
             double d = (double)(a1 * b2 - b1 * a2);
             double dx = (double)(-c1 * b2 + b1 * c2);
             double dy = (double)(-a1 * c2 + c1 * a2);
@@ -118,7 +127,7 @@ namespace CrossPoints
         /// <returns>Возвращает угол в градусах</returns>
         public static double AngleToOX(Segment seg)
         {
-            double angle = Math.Atan2((double)seg.y2 - (double)seg.y1, (double)seg.x2 - (double)seg.x1);
+            double angle = Math.Atan2((double)seg.p2.Y - (double)seg.p1.Y, (double)seg.p2.X - (double)seg.p1.X);
             angle = Math.Abs((angle * 180) / Math.PI);
             return angle;
         }

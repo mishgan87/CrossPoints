@@ -20,6 +20,40 @@ namespace CrossPoints
 			InitializeComponent();
 		}
         /// <summary>
+        /// Обновление pictureBox и отрисовка отрезков из dataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pictureBox_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            Pen penSeg = new Pen(segmentColor.BackColor, 2);
+            penSeg.StartCap = LineCap.Flat;
+            penSeg.EndCap = LineCap.Flat;
+
+            Pen penInter = new Pen(intersectionColor.BackColor, 2);
+            penInter.StartCap = LineCap.Flat;
+            penInter.EndCap = LineCap.Flat;
+
+            for (int i = 0; i < dataGridSegment.Rows.Count - 1; i++)
+            {
+                string str = dataGridSegment[1, i].Value.ToString();
+                string[] subs = str.Split(' ');
+                Point p1 = new Point(Convert.ToInt32(subs[0]), Convert.ToInt32(subs[1]));
+                Point p2 = new Point(Convert.ToInt32(subs[2]), Convert.ToInt32(subs[3]));
+                e.Graphics.DrawLine(penSeg, p1.X, p1.Y, p2.X, p2.Y);
+            }
+
+            for (int i = 0; i < dataGridCross.Rows.Count - 1; i++)
+            {
+                string str = dataGridCross[1, i].Value.ToString();
+                string[] subs = str.Split(' ');
+                Point p1 = new Point(Convert.ToInt32(subs[0]), Convert.ToInt32(subs[1]));
+                Point p2 = new Point(Convert.ToInt32(subs[2]), Convert.ToInt32(subs[3]));
+                e.Graphics.DrawLine(penInter, p1.X, p1.Y, p2.X, p2.Y);
+            }
+        }
+        /// <summary>
         /// Заполнение DataGrid координатами отрезков
         /// </summary>
         /// <param name="dg">ссылка на DataGrid</param>
@@ -31,8 +65,8 @@ namespace CrossPoints
             dTable.Columns.Add("Отрезок", typeof(string));
             for (int i = 0; i < seg.Length; i++)
 			{
-                dTable.Rows.Add(i + 1, "( " + seg[i].x1.ToString() + ", " + seg[i].y1.ToString() + " , " + 
-                    seg[i].x1.ToString() + ", " + seg[i].y1.ToString() + " )");
+                dTable.Rows.Add(i + 1, seg[i].p1.X.ToString() + " " + seg[i].p1.Y.ToString() + " " + 
+                    seg[i].p2.X.ToString() + " " + seg[i].p2.Y.ToString());
             }
             dg.DataSource = dTable;
             dg.Update();
@@ -134,21 +168,21 @@ namespace CrossPoints
                                 double anglej = CrossPoints.Segment.AngleToOX(segArray[j]);
                                 if (anglei >= anglej)
                                 {
-                                    inter.Add(new Segment(segArray[i].x1, segArray[i].y1, 
-                                        cPoint.X - (int)(2 * Math.Cos(anglei)), cPoint.Y - (int)(2 * Math.Sin(anglei))));
+                                    inter.Add(new Segment(segArray[i].p1.X, segArray[i].p1.Y, 
+                                        cPoint.X - (int)(40 * Math.Cos(anglei)), cPoint.Y - (int)(40 * Math.Sin(anglei))));
 
-                                    inter.Add(new Segment(segArray[i].x1, segArray[i].y1,
-                                        cPoint.X + (int)(2 * Math.Cos(anglei)), cPoint.Y + (int)(2 * Math.Sin(anglei))));
+                                    inter.Add(new Segment(cPoint.X + (int)(40 * Math.Cos(anglei)), cPoint.Y + (int)(40 * Math.Sin(anglei)),
+                                        segArray[i].p2.X, segArray[i].p2.Y));
 
                                     // SegmentsForDelete.Add(Segments[i]);
                                 }
                                 else
                                 {
-                                    inter.Add(new Segment(segArray[j].x1, segArray[j].y1,
-                                        cPoint.X - (int)(2 * Math.Cos(anglej)), cPoint.Y - (int)(2 * Math.Sin(anglej))));
+                                    inter.Add(new Segment(segArray[j].p1.X, segArray[j].p1.Y,
+                                        cPoint.X - (int)(40 * Math.Cos(anglej)), cPoint.Y - (int)(40 * Math.Sin(anglej))));
 
-                                    inter.Add(new Segment(segArray[j].x1, segArray[j].y1,
-                                        cPoint.X + (int)(2 * Math.Cos(anglej)), cPoint.Y + (int)(2 * Math.Sin(anglej))));
+                                    inter.Add(new Segment(cPoint.X + (int)(40 * Math.Cos(anglej)), cPoint.Y + (int)(40 * Math.Sin(anglej)),
+                                        segArray[j].p2.X, segArray[j].p2.Y));
 
                                     // SegmentsForDelete.Add(Segments[j]);
                                 }
@@ -169,13 +203,16 @@ namespace CrossPoints
             // Segment[] cross = inter.Distinct().ToList().ToArray();
             Segment[] cross = inter.ToArray();
             FillSegmentDataGridView(ref dataGridCross, ref cross);
+
+            pictureBox.Refresh();
         }
-		private void buttonApply_Click(object sender, EventArgs e)
-		{
-            
+        private void MainForm_Resize(object sender, System.EventArgs e)
+        {
+            // pictureBox.Height = this.Height - 20;
+            // pictureBox.Width = this.Width - buttonGenerate.Width - 20;
         }
 
-		private void segmentColor_Click(object sender, EventArgs e)
+        private void segmentColor_Click(object sender, EventArgs e)
 		{
             ColorDialog cd = new ColorDialog();
             cd.AllowFullOpen = false;

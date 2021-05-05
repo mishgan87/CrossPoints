@@ -45,6 +45,7 @@ namespace CrossPoints
 			((System.ComponentModel.ISupportInitialize)(this.dataGridCross)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
 			this.SuspendLayout();
+			this.SizeChanged += this.MainForm_Resize;
 			// 
 			// buttonGenerate
 			// 
@@ -167,6 +168,8 @@ namespace CrossPoints
 			this.pictureBox.Size = new System.Drawing.Size(504, 646);
 			this.pictureBox.TabIndex = 10;
 			this.pictureBox.TabStop = false;
+			this.pictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox_Paint);
+			this.Controls.Add(pictureBox);
 			// 
 			// MainForm
 			// 
