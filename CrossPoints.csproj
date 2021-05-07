@@ -5,6 +5,19 @@
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>	
   <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore" Version="5.0.0" />
+	<PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="Microsoft.NetFramework.Analyzers" Version="3.3.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>build; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>	
+  <ItemGroup>
+    <Reference Include="System.Data.SqlClient">
+      <HintPath>..\..\..\.nuget\packages\system.data.sqlclient\4.8.2\lib\net450\System.Data.SqlClient.dll</HintPath>
+    </Reference>
+  </ItemGroup>	
+  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
