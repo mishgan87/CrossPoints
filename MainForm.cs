@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -25,7 +26,17 @@ namespace CrossPoints
         public MainForm()
 		{
 			InitializeComponent();
-		}
+            ToolTip toolTipCustom = new ToolTip();
+            toolTipCustom.AutoPopDelay = 5000;
+            toolTipCustom.InitialDelay = 1000;
+            toolTipCustom.ReshowDelay = 500;
+            toolTipCustom.ShowAlways = true;
+            toolTipCustom.SetToolTip(this.buttonSegColor, @"Цвет отрезков");
+            toolTipCustom.SetToolTip(this.buttonCrossColor, @"Цвет пересечений");
+            toolTipCustom.SetToolTip(this.buttonGenerate, @"Генерировать");
+            toolTipCustom.SetToolTip(this.buttonReload, @"Обновить");
+            toolTipCustom.SetToolTip(this.buttonSave, @"Сохранить");
+        }
         /// <summary>
         /// Обновление pictureBox и отрисовка отрезков из dataGrid
         /// </summary>
@@ -196,7 +207,6 @@ namespace CrossPoints
                 sqlDataAdapterCross.Fill(dataSetCross, "Пересечения");
                 dataGridCross.DataSource = dataSetCross.Tables["Пересечения"];
                 int count = dataGridSegment.Rows.Count - 1;
-                countTextBox.Text = count.ToString();
             }
             catch (Exception ex)
             {
@@ -232,7 +242,6 @@ namespace CrossPoints
                 dataGridCross.DataSource = dataSetCross.Tables["Пересечения"];
 
                 int count = dataGridSegment.Rows.Count - 1;
-                countTextBox.Text = count.ToString();
             }
 			catch (Exception ex)
 			{
@@ -254,7 +263,10 @@ namespace CrossPoints
             cd.ShowHelp = true;
             cd.Color = buttonSegColor.BackColor;
             if (cd.ShowDialog() == DialogResult.OK)
+            {
                 buttonSegColor.BackColor = cd.Color;
+                pictureBox.Refresh();
+            }
         }
 
 		private void ButtonCrossColor_Click(object sender, EventArgs e)
@@ -264,7 +276,10 @@ namespace CrossPoints
             cd.ShowHelp = true;
             cd.Color = buttonCrossColor.BackColor;
             if (cd.ShowDialog() == DialogResult.OK)
+            {
                 buttonCrossColor.BackColor = cd.Color;
+                pictureBox.Refresh();
+            }
         }
 
 		private void ButtonGenerate_Click(object sender, EventArgs e)
@@ -278,18 +293,19 @@ namespace CrossPoints
                             sw.Flush();
                         };
                         */
-            if (countTextBox.Text.Length == 0)
+            var countStr = Microsoft.VisualBasic.Interaction.InputBox("Введите количество отрезков", "Количество отрезков", "1");
+            if (countStr.Length == 0)
             {
                 return;
             }
             // проверка является ли числом содержимое текстбокса
             bool isNumber = true;
-            for (int i = 0; i < countTextBox.Text.Length; i++)
+            for (int i = 0; i < countStr.Length; i++)
             {
                 bool isDigit = false;
                 for (int j = 0; j < 9; j++)
                 {
-                    if (countTextBox.Text.Substring(i, 1) == j.ToString())
+                    if (countStr.Substring(i, 1) == j.ToString())
                     {
                         isDigit = true;
                         break;
@@ -309,7 +325,7 @@ namespace CrossPoints
             Random rnd = new();
             int xmax = pictureBox.Width;
             int ymax = pictureBox.Height;
-            int count = Convert.ToInt32(countTextBox.Text);
+            int count = Convert.ToInt32(countStr);
             // массив отрезков
             Segment[] seg = new Segment[count];
             for (int i = 0; i < count; i++)

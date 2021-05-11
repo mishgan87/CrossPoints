@@ -29,6 +29,7 @@ namespace CrossPoints
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.dataGridSegment = new System.Windows.Forms.DataGridView();
 			this.dataGridCross = new System.Windows.Forms.DataGridView();
 			this.pictureBox = new System.Windows.Forms.PictureBox();
@@ -37,7 +38,6 @@ namespace CrossPoints
 			this.buttonSegColor = new System.Windows.Forms.Button();
 			this.buttonReload = new System.Windows.Forms.Button();
 			this.buttonSave = new System.Windows.Forms.Button();
-			this.countTextBox = new System.Windows.Forms.TextBox();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridSegment)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridCross)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -47,48 +47,48 @@ namespace CrossPoints
 			// 
 			this.dataGridSegment.BackgroundColor = System.Drawing.SystemColors.Control;
 			this.dataGridSegment.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridSegment.Location = new System.Drawing.Point(9, 49);
+			this.dataGridSegment.Location = new System.Drawing.Point(53, 9);
 			this.dataGridSegment.Name = "dataGridSegment";
 			this.dataGridSegment.RowTemplate.Height = 23;
-			this.dataGridSegment.Size = new System.Drawing.Size(289, 246);
+			this.dataGridSegment.Size = new System.Drawing.Size(282, 241);
 			this.dataGridSegment.TabIndex = 2;
 			// 
 			// dataGridCross
 			// 
 			this.dataGridCross.BackgroundColor = System.Drawing.SystemColors.Control;
 			this.dataGridCross.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridCross.Location = new System.Drawing.Point(9, 301);
+			this.dataGridCross.Location = new System.Drawing.Point(53, 256);
 			this.dataGridCross.Name = "dataGridCross";
 			this.dataGridCross.RowTemplate.Height = 23;
-			this.dataGridCross.Size = new System.Drawing.Size(289, 246);
+			this.dataGridCross.Size = new System.Drawing.Size(282, 246);
 			this.dataGridCross.TabIndex = 3;
 			// 
 			// pictureBox
 			// 
 			this.pictureBox.BackColor = System.Drawing.Color.White;
-			this.pictureBox.Location = new System.Drawing.Point(304, 49);
+			this.pictureBox.Location = new System.Drawing.Point(341, 8);
 			this.pictureBox.Name = "pictureBox";
-			this.pictureBox.Size = new System.Drawing.Size(504, 498);
+			this.pictureBox.Size = new System.Drawing.Size(461, 494);
 			this.pictureBox.TabIndex = 10;
 			this.pictureBox.TabStop = false;
 			this.pictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBox_Paint);
 			// 
 			// buttonGenerate
 			// 
-			this.buttonGenerate.Location = new System.Drawing.Point(201, 12);
+			this.buttonGenerate.Image = ((System.Drawing.Image)(resources.GetObject("buttonGenerate.Image")));
+			this.buttonGenerate.Location = new System.Drawing.Point(9, 97);
 			this.buttonGenerate.Name = "buttonGenerate";
-			this.buttonGenerate.Size = new System.Drawing.Size(90, 23);
+			this.buttonGenerate.Size = new System.Drawing.Size(38, 38);
 			this.buttonGenerate.TabIndex = 32;
-			this.buttonGenerate.Text = "Генерировать";
 			this.buttonGenerate.UseVisualStyleBackColor = true;
 			this.buttonGenerate.Click += new System.EventHandler(this.ButtonGenerate_Click);
 			// 
 			// buttonCrossColor
 			// 
 			this.buttonCrossColor.BackColor = System.Drawing.Color.Red;
-			this.buttonCrossColor.Location = new System.Drawing.Point(393, 12);
+			this.buttonCrossColor.Location = new System.Drawing.Point(9, 185);
 			this.buttonCrossColor.Name = "buttonCrossColor";
-			this.buttonCrossColor.Size = new System.Drawing.Size(90, 23);
+			this.buttonCrossColor.Size = new System.Drawing.Size(38, 38);
 			this.buttonCrossColor.TabIndex = 33;
 			this.buttonCrossColor.UseVisualStyleBackColor = false;
 			this.buttonCrossColor.Click += new System.EventHandler(this.ButtonCrossColor_Click);
@@ -96,46 +96,38 @@ namespace CrossPoints
 			// buttonSegColor
 			// 
 			this.buttonSegColor.BackColor = System.Drawing.Color.Blue;
-			this.buttonSegColor.Location = new System.Drawing.Point(297, 12);
+			this.buttonSegColor.Location = new System.Drawing.Point(9, 141);
 			this.buttonSegColor.Name = "buttonSegColor";
-			this.buttonSegColor.Size = new System.Drawing.Size(90, 23);
+			this.buttonSegColor.Size = new System.Drawing.Size(38, 38);
 			this.buttonSegColor.TabIndex = 35;
 			this.buttonSegColor.UseVisualStyleBackColor = false;
 			this.buttonSegColor.Click += new System.EventHandler(this.ButtonSegColor_Click);
 			// 
 			// buttonReload
 			// 
-			this.buttonReload.Location = new System.Drawing.Point(9, 12);
+			this.buttonReload.Image = ((System.Drawing.Image)(resources.GetObject("buttonReload.Image")));
+			this.buttonReload.Location = new System.Drawing.Point(9, 9);
 			this.buttonReload.Name = "buttonReload";
-			this.buttonReload.Size = new System.Drawing.Size(90, 23);
+			this.buttonReload.Size = new System.Drawing.Size(38, 38);
 			this.buttonReload.TabIndex = 36;
-			this.buttonReload.Text = "Обновить";
 			this.buttonReload.UseVisualStyleBackColor = true;
 			// 
 			// buttonSave
 			// 
-			this.buttonSave.Location = new System.Drawing.Point(105, 12);
+			this.buttonSave.AutoSize = true;
+			this.buttonSave.Image = ((System.Drawing.Image)(resources.GetObject("buttonSave.Image")));
+			this.buttonSave.Location = new System.Drawing.Point(9, 53);
 			this.buttonSave.Name = "buttonSave";
-			this.buttonSave.Size = new System.Drawing.Size(90, 23);
+			this.buttonSave.Size = new System.Drawing.Size(38, 38);
 			this.buttonSave.TabIndex = 37;
-			this.buttonSave.Text = "Сохранить";
 			this.buttonSave.UseVisualStyleBackColor = true;
 			this.buttonSave.Click += new System.EventHandler(this.ButtonSave_Click);
-			// 
-			// countTextBox
-			// 
-			this.countTextBox.Location = new System.Drawing.Point(489, 14);
-			this.countTextBox.Name = "countTextBox";
-			this.countTextBox.Size = new System.Drawing.Size(100, 21);
-			this.countTextBox.TabIndex = 38;
-			this.countTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(814, 553);
-			this.Controls.Add(this.countTextBox);
 			this.Controls.Add(this.buttonSave);
 			this.Controls.Add(this.buttonReload);
 			this.Controls.Add(this.buttonSegColor);
@@ -164,7 +156,6 @@ namespace CrossPoints
 		private System.Windows.Forms.Button buttonSegColor;
 		private System.Windows.Forms.Button buttonReload;
 		private System.Windows.Forms.Button buttonSave;
-		private System.Windows.Forms.TextBox countTextBox;
 	}
 }
 
